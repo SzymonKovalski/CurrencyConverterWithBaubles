@@ -1,0 +1,16 @@
+promices
+callbacks
+async/await
+unnesessary timers and/or event emmiters
+async iteration
+thenable
+async generators
+
+
+cancelling of async functions
+pattern open constructor
+Future
+Deferred
+Actor model
+Observer Pattern
+RxJS?
