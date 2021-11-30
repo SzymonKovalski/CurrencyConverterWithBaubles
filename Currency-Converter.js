@@ -48,21 +48,21 @@ async function doExchangeRate(fromCurrency, toCurrency) {
 //callback command line
 
 
-function askAboutExchangeRates() {
+/*function askAboutExchangeRates() {
     let from, to = 'USD';
     rl.question('From Currency?', fromCurrency => {
-        from = fromCurrency;
+        from = fromCurrency.trim();
         rl.close();
     });
     /*rl.question('To Currency?', toCurrency => {
         to = toCurrency;
         rl.close();
-    });*/
+    });
     doExchangeRate(from, to);
-}
+}*/
 
 
-/*rl.question('What would you like to do?', userInput => {
+rl.question('What would you like to do?', userInput => {
     switch (userInput.trim()) {
         case ('doExchangeRate'):
             rl.close();//emits a event
@@ -71,9 +71,9 @@ function askAboutExchangeRates() {
             rl.close();
             break;
     }
-});*/
+});
 
-askAboutExchangeRates();
+//askAboutExchangeRates();
 
 
 
