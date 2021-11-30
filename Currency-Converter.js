@@ -1,6 +1,5 @@
 //base euro
-const Currency = () => {
-    const currencyRate = () => [
+const currencyRate = [
     ['GBP', 0.8],
     ['JPY', 128.2],
     ['BGN', 1.9],
@@ -10,14 +9,21 @@ const Currency = () => {
     ['USD', 1.1],
     ['UAH', 30.9],
     ['PLN', 4.6]
-    ];
-    // eslint-disable-next-line no-unused-vars
-    const getRate = Currency => {
-        const exchangeRate =
-        currencyRate[this.currencyRate.indexOf(Currency), 1];
-        console.log(exchangeRate);
-    };
+];
+
+const getRate = Currency => {
+    let index;
+    for (let i = 0; i < currencyRate.length;) {
+        console.log(i);
+        if (currencyRate[i][0] === Currency) {
+            index = i;
+            break;
+        }
+    }
+    const exchangeRate = currencyRate[index][1];
+    console.log(exchangeRate);
 };
+
 /*const countryNames = [
     ['United States'],
     ['Japan'],
@@ -35,4 +41,6 @@ const Currency = () => {
     const toRate = Currency.getRate(toCurrency);
     console.log(toRate / fromRate);
 };*/
-Currency.getRate('USD');
+getRate('USD');
+getRate('PLN');
+
