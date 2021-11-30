@@ -10,20 +10,6 @@ const currencyRate = [
     ['UAH', 30.9],
     ['PLN', 4.6]
 ];
-
-const getRate = Currency => {
-    let index;
-    for (let i = 0; i < currencyRate.length; i++) {
-        console.log(i);
-        if (currencyRate[i][0] === Currency) {
-            index = i;
-            break;
-        }
-    }
-    const exchangeRate = currencyRate[index][1];
-    console.log(exchangeRate);
-};
-
 /*const countryNames = [
     ['United States'],
     ['Japan'],
@@ -36,11 +22,36 @@ const getRate = Currency => {
     ['Poland']
 ];*/
 
-/*const getExchangeRate = (fromCurrency, toCurrency) => {
-    const fromRate = Currency.getRate(fromCurrency);
-    const toRate = Currency.getRate(toCurrency);
-    console.log(toRate / fromRate);
+/*const getRate = async Currency => {
+    let index;
+    for (let i = 0; i < currencyRate.length; i++) {
+        //console.log(i);
+        if (currencyRate[i][0] === Currency) {
+            index = i;
+            break;
+        }
+    }
+    const exchangeRate = currencyRate[index][1];
+    return exchangeRate;
 };*/
-getRate('USD');
-getRate('PLN');
+function getRate(Currency) { //promices to give rate
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < currencyRate.length; i++) {
+            //console.log(i);
+            if (currencyRate[i][0] === Currency) {
+                i;
+                resolve(currencyRate[i][1]);
+            }
+        }
+        reject();
+    });
+}
 
+async function DoWork(fromCurrency, toCurrency) {
+   //awaits rate, gives back exchangeRate
+   const fromRate = await getRate(fromCurrency);
+   const toRate = await getRate(toCurrency);
+   console.log(toRate / fromRate);
+}
+
+DoWork('USD', 'PLN');
