@@ -1,3 +1,6 @@
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin,
+                        output: process.stdout });
 //base euro
 const currencyRate = [
     ['GBP', 0.8],
@@ -35,7 +38,7 @@ function getRate(Currency) { //promices to give rate
     });
 }
 
-async function DoExchangeRate(fromCurrency, toCurrency) {
+async function doExchangeRate(fromCurrency, toCurrency) {
    //awaits rate, gives back exchangeRate
    const fromRate = await getRate(fromCurrency);
    const toRate = await getRate(toCurrency);
@@ -45,16 +48,29 @@ async function DoExchangeRate(fromCurrency, toCurrency) {
 //callback command line
 
 
-DoExchangeRate('USD', 'PLN');
+
+doExchangeRate('USD', 'PLN');
 
 
 
-setTimeout(() => {
-    console.log('pain means bread in france');
-}, 3000);
 
 
-
+rl.question('What would you like to do?', userInput => {
+    switch (userInput.trim()) {
+        case ('Bread'):
+            setTimeout(() => {
+                console.log('pain means bread in france');
+            }, 3000);
+            rl.close();//emits a event
+            break;
+        case (''):
+            rl.close();
+            break;
+    }
+});
+rl.on('', () => { //listens for  event
+    console.log('thank you');
+});
 
 
 
