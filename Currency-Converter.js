@@ -65,11 +65,14 @@ async function doExchangeRate(fromCurrency, toCurrency) {
 rl.question('What would you like to do?', userInput => {
     switch (userInput.trim()) {
         case ('doExchangeRate'):
+            rl.setPrompt('');
+            doExchangeRate('USD', 'PLN');
             rl.close();//emits a event
             break;
         case (''):
             rl.close();
             break;
+        default:
     }
 });
 
