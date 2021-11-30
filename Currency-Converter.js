@@ -25,7 +25,7 @@ const currencyRate = [
     ['Poland']
 ];*/
 
-function getRate(Currency) { //promices to give rate
+function getRate(Currency) { //errorproof this. There WILL be unregistered ones
     return new Promise((resolve, reject) => {
         for (let i = 0; i < currencyRate.length; i++) {
             //console.log(i);
@@ -48,31 +48,32 @@ async function doExchangeRate(fromCurrency, toCurrency) {
 //callback command line
 
 
+function askAboutExchangeRates() {
+    let from, to = 'USD';
+    rl.question('From Currency?', fromCurrency => {
+        from = fromCurrency;
+        rl.close();
+    });
+    /*rl.question('To Currency?', toCurrency => {
+        to = toCurrency;
+        rl.close();
+    });*/
+    doExchangeRate(from, to);
+}
 
-doExchangeRate('USD', 'PLN');
 
-
-
-
-
-rl.question('What would you like to do?', userInput => {
+/*rl.question('What would you like to do?', userInput => {
     switch (userInput.trim()) {
-        case ('Bread'):
-            setTimeout(() => {
-                console.log('pain means bread in france');
-            }, 3000);
+        case ('doExchangeRate'):
             rl.close();//emits a event
             break;
         case (''):
             rl.close();
             break;
     }
-});
-rl.on('', () => { //listens for  event
-    console.log('thank you');
-});
+});*/
 
-
+askAboutExchangeRates();
 
 
 
