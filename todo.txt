@@ -1,7 +1,8 @@
-promices
-callbacks
-async/await
-unnesessary timers and/or event emmiters
+                                                        promices
+callbacks wait for a different function do finish running
+                                                        async/await
+unnesessary timers 
+event emmiters are fpr making html buttons and other files work
 async iteration
 thenable
 async generators
