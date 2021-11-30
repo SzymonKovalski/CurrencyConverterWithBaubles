@@ -13,7 +13,7 @@ const currencyRate = [
 
 const getRate = Currency => {
     let index;
-    for (let i = 0; i < currencyRate.length;) {
+    for (let i = 0; i < currencyRate.length; i++) {
         console.log(i);
         if (currencyRate[i][0] === Currency) {
             index = i;
