@@ -22,18 +22,6 @@ const currencyRate = [
     ['Poland']
 ];*/
 
-/*const getRate = async Currency => {
-    let index;
-    for (let i = 0; i < currencyRate.length; i++) {
-        //console.log(i);
-        if (currencyRate[i][0] === Currency) {
-            index = i;
-            break;
-        }
-    }
-    const exchangeRate = currencyRate[index][1];
-    return exchangeRate;
-};*/
 function getRate(Currency) { //promices to give rate
     return new Promise((resolve, reject) => {
         for (let i = 0; i < currencyRate.length; i++) {
@@ -47,11 +35,28 @@ function getRate(Currency) { //promices to give rate
     });
 }
 
-async function DoWork(fromCurrency, toCurrency) {
+async function DoExchangeRate(fromCurrency, toCurrency) {
    //awaits rate, gives back exchangeRate
    const fromRate = await getRate(fromCurrency);
    const toRate = await getRate(toCurrency);
-   console.log(toRate / fromRate);
+   console.log(await toRate / await fromRate);
 }
 
-DoWork('USD', 'PLN');
+//callback command line
+
+
+DoExchangeRate('USD', 'PLN');
+
+
+
+setTimeout(() => {
+    console.log('pain means bread in france');
+}, 3000);
+
+
+
+
+
+
+
+
