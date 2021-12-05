@@ -1,7 +1,9 @@
+
 // Variables
 const startbtn = document.querySelector('#start');
 const resetbtn = document.querySelector('#reset');
 const recordbtn = document.querySelector('#record');
+//const clearbtn = document.querySelector('#clear');
 
 const recordList = document.querySelector('#record-list');
 
@@ -45,7 +47,7 @@ Timer.prototype.start = toggleTimer;
 Timer.prototype.reset = resetTimer;
 Timer.prototype.record = recordTimer;
 Timer.prototype.unload = unloadTimer;
-//Timer.prototype.keypress = keypress;
+Timer.prototype.keypress = keypress;
 
 HTMLUI.prototype.clear = clearRecords;
 HTMLUI.prototype.records = showStorageRecords;
@@ -95,7 +97,7 @@ function showStorageRecords() {
 function clearRecords() {
     recordList.innerHTML = '';
 }
-/*
+
 function keypress(e) {
     switch (e.keyCode) {
         case 114:
@@ -110,7 +112,7 @@ function keypress(e) {
         default:
             break;
     }
-}*/
+}
 function unloadTimer() {
     if (started === true) {
         toggleTimer();
@@ -122,7 +124,7 @@ function recordTimer() {
     // eslint-disable-next-line prefer-const
     let timeToRecord = parseFloat(time) / 100;
     recordList.innerHTML += `
-    <li class='records list-group-item'>${timeToRecord}</li>`;
+            <li class='records list-group-item'>${timeToRecord}</li>`;
     local.record(timeToRecord);
 }
 
