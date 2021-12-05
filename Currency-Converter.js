@@ -1,7 +1,7 @@
 const readline = require('readline');
 const rl = readline.createInterface({ input: process.stdin,
                         output: process.stdout });
-//base euro
+//base euro, some external API would also work
 const currencyRate = [
     ['GBP', 0.8],
     ['JPY', 128.2],
@@ -13,7 +13,7 @@ const currencyRate = [
     ['UAH', 30.9],
     ['PLN', 4.6]
 ];
-/*const countryNames = [
+const countryNames = [
     ['United States'],
     ['Japan'],
     ['Bulgaria'],
@@ -23,9 +23,9 @@ const currencyRate = [
     ['England'],
     ['Ukraine'],
     ['Poland']
-];*/
+];
 
-function getRate(Currency) { //errorproof this. There WILL be unregistered ones
+function getRate(Currency) {
     return new Promise((resolve, reject) => {
         for (let i = 0; i < currencyRate.length; i++) {
             //console.log(i);
@@ -42,24 +42,13 @@ async function doExchangeRate(fromCurrency, toCurrency) {
    //awaits rate, gives back exchangeRate
    const fromRate = await getRate(fromCurrency);
    const toRate = await getRate(toCurrency);
-   console.log(await toRate / await fromRate);
+   console.log(toRate / fromRate);
 }
 
-//callback command line
-
-
-/*function askAboutExchangeRates() {
-    let from, to = 'USD';
-    rl.question('From Currency?', fromCurrency => {
-        from = fromCurrency.trim();
-        rl.close();
-    });
-    /*rl.question('To Currency?', toCurrency => {
-        to = toCurrency;
-        rl.close();
-    });
-    doExchangeRate(from, to);
-}*/
+const getCountries = async toCurrency => {
+    const responce = await countryNames[toCurrency];
+    console.log(responce);
+};
 
 
 rl.question('What would you like to do?', userInput => {
@@ -70,6 +59,12 @@ rl.question('What would you like to do?', userInput => {
                     doExchangeRate(from, to);
                     rl.close();//emits a event
                 });
+            });
+            break;
+        case ('getCountries'):
+            rl.on('line', number => {
+                getCountries(number);
+                rl.close();
             });
             break;
         case (''):
