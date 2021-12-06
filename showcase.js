@@ -1,3 +1,16 @@
+const currencyRate = [
+    ['GBP', 0.8],
+    ['JPY', 128.2],
+    ['BGN', 1.9],
+    ['CAD', 1.4],
+    ['HRK', 7.5],
+    ['NOK', 10.2],
+    ['USD', 1.1],
+    ['UAH', 30.9],
+    ['PLN', 4.6]
+];
+// would probably have been an external API irl
+
 
 // Variables
 const startbtn = document.querySelector('#start');
@@ -6,6 +19,9 @@ const recordbtn = document.querySelector('#record');
 //const clearbtn = document.querySelector('#clear');
 
 const recordList = document.querySelector('#record-list');
+
+
+const confirmExchangeBtn = document.querySelector('#confirm');
 
 const timer = new Timer();
 const html = new HTMLUI();
@@ -160,17 +176,7 @@ timerdiv.innerHTML = local.getTime();
 
 
 
-const currencyRate = [
-    ['GBP', 0.8],
-    ['JPY', 128.2],
-    ['BGN', 1.9],
-    ['CAD', 1.4],
-    ['HRK', 7.5],
-    ['NOK', 10.2],
-    ['USD', 1.1],
-    ['UAH', 30.9],
-    ['PLN', 4.6]
-];
+
 function getRate(Currency) {
     return new Promise((resolve, reject) => {
         for (let i = 0; i < currencyRate.length; i++) {
@@ -190,3 +196,16 @@ async function doExchangeRate(fromCurrency, toCurrency) {
    const toRate = await getRate(toCurrency);
    console.log(toRate / fromRate);
 }
+function doExchange(fromCurrency, toCurrency, value) {
+    const rate = doExchangeRate(fromCurrency, toCurrency);
+    return value * rate;
+}
+
+
+
+confirmExchangeBtn.addEventListener('click', () => {
+    const fromCurrency = document.getElementById('From').value;
+    const toCurrency = document.getElementById('To').value;
+    const value = document.getElementById('amount1').value;
+    doExchange(fromCurrency, toCurrency, value);
+});
