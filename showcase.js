@@ -180,7 +180,6 @@ timerdiv.innerHTML = local.getTime();
 function getRate(Currency) {
     return new Promise((resolve, reject) => {
         for (let i = 0; i < currencyRate.length; i++) {
-            //console.log(i);
             if (currencyRate[i][0] === Currency) {
                 i;
                 resolve(currencyRate[i][1]);
@@ -191,14 +190,13 @@ function getRate(Currency) {
 }
 
 async function doExchangeRate(fromCurrency, toCurrency) {
-   //awaits rate, gives back exchangeRate
-   const fromRate = await getRate(fromCurrency);
+       const fromRate = await getRate(fromCurrency);
    const toRate = await getRate(toCurrency);
-   console.log(toRate / fromRate);
+   return (toRate / fromRate);
 }
 function doExchange(fromCurrency, toCurrency, value) {
     const rate = doExchangeRate(fromCurrency, toCurrency);
-    return value * rate;
+    return (value * rate);
 }
 
 
