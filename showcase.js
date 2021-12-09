@@ -22,10 +22,8 @@ function getRate(Currency) {
 }
 
 // Variables
-const startbtn = document.querySelector('#start');
-const resetbtn = document.querySelector('#reset');
-const recordbtn = document.querySelector('#record');
-//const clearbtn = document.querySelector('#clear');
+//const startbtn = document.querySelector('#start');
+
 
 const recordList = document.querySelector('#record-list');
 
@@ -47,9 +45,9 @@ function eventListen() {
     window.onunload = timer.unload;
     document.onkeypress = timer.keypress;
 
-    startbtn.addEventListener('click', timer.start);
-    resetbtn.addEventListener('click', timer.reset);
-    recordbtn.addEventListener('click', timer.record);
+    //startbtn.addEventListener('click', timer.start);
+    //resetbtn.addEventListener('click', timer.reset);
+    //recordbtn.addEventListener('click', timer.record);
 }
 
 
@@ -182,5 +180,12 @@ confirmExchangeBtn.addEventListener('click', () => {
     const fromCurrency = document.getElementById('From').value;
     const toCurrency = document.getElementById('To').value;
     const value = document.getElementById('amount1').value;
+
+    timer.start;
+
     doExchange(fromCurrency, toCurrency, value);
+
+    timer.start;
+    timer.record;
+    timer.reset;
 });
