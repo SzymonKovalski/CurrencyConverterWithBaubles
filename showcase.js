@@ -22,8 +22,10 @@ function getRate(Currency) {
 }
 
 // Variables
-//const startbtn = document.querySelector('#start');
-
+const startbtn = document.querySelector('#start');
+const resetbtn = document.querySelector('#reset');
+const recordbtn = document.querySelector('#record');
+//const clearbtn = document.querySelector('#clear');
 
 const recordList = document.querySelector('#record-list');
 
@@ -45,9 +47,9 @@ function eventListen() {
     window.onunload = timer.unload;
     document.onkeypress = timer.keypress;
 
-    //startbtn.addEventListener('click', timer.start);
-    //resetbtn.addEventListener('click', timer.reset);
-    //recordbtn.addEventListener('click', timer.record);
+    startbtn.addEventListener('click', timer.start);
+    resetbtn.addEventListener('click', timer.reset);
+    recordbtn.addEventListener('click', timer.record);
 }
 
 
@@ -70,6 +72,7 @@ Timer.prototype.start = toggleTimer;
 Timer.prototype.reset = resetTimer;
 Timer.prototype.record = recordTimer;
 Timer.prototype.unload = unloadTimer;
+
 
 HTMLUI.prototype.clear = clearRecords;
 HTMLUI.prototype.records = showStorageRecords;
@@ -120,7 +123,6 @@ function clearRecords() {
     recordList.innerHTML = '';
 }
 
-
 function unloadTimer() {
     if (started === true) {
         toggleTimer();
@@ -164,10 +166,17 @@ eventListen();
 html.records();
 timerdiv.innerHTML = local.getTime();
 
+
+
+
+
+
+
+
 async function doExchangeRate(fromCurrency, toCurrency) {
-       const fromRate = await getRate(fromCurrency);
-   const toRate = await getRate(toCurrency);
-   return (toRate / fromRate);
+    const fromRate = await getRate(fromCurrency);
+    const toRate = await getRate(toCurrency);
+    return (toRate / fromRate);
 }
 function doExchange(fromCurrency, toCurrency, value) {
     const rate = doExchangeRate(fromCurrency, toCurrency);
@@ -175,7 +184,7 @@ function doExchange(fromCurrency, toCurrency, value) {
 }
 
 
-
+timer.reset();
 confirmExchangeBtn.addEventListener('click', () => {
     const fromCurrency = document.getElementById('From').value;
     const toCurrency = document.getElementById('To').value;
@@ -183,9 +192,8 @@ confirmExchangeBtn.addEventListener('click', () => {
 
     timer.start;
 
-    doExchange(fromCurrency, toCurrency, value);
+    console.log(doExchange(fromCurrency, toCurrency, value));
 
-    timer.start;
-    timer.record;
     timer.reset;
+
 });
