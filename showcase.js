@@ -14,26 +14,13 @@ const currencyRate = input => {
     }, 1000);
 };
 // would probably have been an external API irl
-function getRate(Currency) {
-    return new Promise((resolve, reject) => {
-        resolve(currencyRate(Currency));
-        reject();
-    });
-}
+
 
 // Variables
-const startbtn = document.querySelector('#start');
-const resetbtn = document.querySelector('#reset');
-const recordbtn = document.querySelector('#record');
 //const clearbtn = document.querySelector('#clear');
-
-const recordList = document.querySelector('#record-list');
-
-
 const confirmExchangeBtn = document.querySelector('#confirm');
 
 const timer = new Timer();
-const html = new HTMLUI();
 const local = new LocalStorage();
 
 // eslint-disable-next-line prefer-const
@@ -43,14 +30,7 @@ let time;
 let interval;
 
 // Event listeners
-function eventListen() {
-    window.onunload = timer.unload;
-    document.onkeypress = timer.keypress;
 
-    startbtn.addEventListener('click', timer.start);
-    resetbtn.addEventListener('click', timer.reset);
-    recordbtn.addEventListener('click', timer.record);
-}
 
 
 
@@ -58,10 +38,6 @@ function eventListen() {
 // Objects
 function Timer() {
     this.type = 'Timer';
-}
-
-function HTMLUI() {
-
 }
 
 function LocalStorage() {
@@ -72,10 +48,6 @@ Timer.prototype.start = toggleTimer;
 Timer.prototype.reset = resetTimer;
 Timer.prototype.record = recordTimer;
 Timer.prototype.unload = unloadTimer;
-
-
-HTMLUI.prototype.clear = clearRecords;
-HTMLUI.prototype.records = showStorageRecords;
 
 LocalStorage.prototype.getCurrentRecord = function() {
     return JSON.parse(localStorage.getItem('recordedTime'));
@@ -107,21 +79,6 @@ function addTimeStorage(time) {
     localStorage.setItem('recordedTime', JSON.stringify(currentRecord));
 }
 
-function showStorageRecords() {
-    // eslint-disable-next-line prefer-const
-    let currentRecord = local.getCurrentRecord();
-    if (currentRecord !== null) {
-        currentRecord.forEach(record => {
-        recordList.innerHTML += `
-            <li class='records list-group-item'>${record}</li>
-        `;
-        });
-    }
-}
-
-function clearRecords() {
-    recordList.innerHTML = '';
-}
 
 function unloadTimer() {
     if (started === true) {
@@ -133,15 +90,12 @@ function unloadTimer() {
 function recordTimer() {
     // eslint-disable-next-line prefer-const
     let timeToRecord = parseFloat(time) / 100;
-    recordList.innerHTML += `
-            <li class='records list-group-item'>${timeToRecord}</li>`;
     local.record(timeToRecord);
 }
 
 function resetTimer() {
     time = 0;
     timerdiv.innerHTML = time;
-    html.clear();
     local.clear();
 }
 
@@ -161,9 +115,6 @@ function toggleTimer() {
     return 0;
 }
 time = parseFloat(local.getTime()) * 100 || 0;
-console.log(time);
-eventListen();
-html.records();
 timerdiv.innerHTML = local.getTime();
 
 
@@ -172,28 +123,38 @@ timerdiv.innerHTML = local.getTime();
 
 
 
-
-async function doExchangeRate(fromCurrency, toCurrency) {
-    const fromRate = await getRate(fromCurrency);
-    const toRate = await getRate(toCurrency);
-    return (toRate / fromRate);
+function getRate(Currency) {
+    return new Promise((resolve, reject) => {
+        const err = false;
+        if (!err) {
+        resolve(currencyRate(Currency));
+        } else {
+        reject('failure');
+        }
+    });
 }
-function doExchange(fromCurrency, toCurrency, value) {
-    const rate = doExchangeRate(fromCurrency, toCurrency);
-    return (value * rate);
+async function doExchange(fromCurrency, toCurrency, value, Callback) {
+    const fromRate = Promise.resolve(getRate(fromCurrency));
+    const toRate = Promise.resolve(getRate(toCurrency));
+    Promise.all([fromRate, toRate]).then(rates => {
+        const result = value * rates[0] / rates[1];
+        Callback();
+        return result;
+    });
 }
 
 
 timer.reset();
-confirmExchangeBtn.addEventListener('click', () => {
+confirmExchangeBtn.addEventListener('click', async () => {
     const fromCurrency = document.getElementById('From').value;
     const toCurrency = document.getElementById('To').value;
     const value = document.getElementById('amount1').value;
 
     timer.start;
 
-    console.log(doExchange(fromCurrency, toCurrency, value));
-
-    timer.reset;
-
+    doExchange(fromCurrency, toCurrency, value, () => {
+        timer.start;
+        timer.record;
+        timer.reset;
+    });
 });
