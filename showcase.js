@@ -1,16 +1,25 @@
-const currencyRate = [
-    ['GBP', 0.8],
-    ['JPY', 128.2],
-    ['BGN', 1.9],
-    ['CAD', 1.4],
-    ['HRK', 7.5],
-    ['NOK', 10.2],
-    ['USD', 1.1],
-    ['UAH', 30.9],
-    ['PLN', 4.6]
-];
+const currencyRate = input => {
+    setTimeout(() => {
+        switch (input) {
+            case 'GBP': return 0.8;
+            case 'JPY': return 128.2;
+            case 'BGN': return 1.9;
+            case 'CAD': return 1.4;
+            case 'HRK': return 7.5;
+            case 'NOK': return 10.2;
+            case 'USD': return 1.1;
+            case 'UAH': return 30.9;
+            case 'PLN': return 4.6;
+        }
+    }, 1000);
+};
 // would probably have been an external API irl
-
+function getRate(Currency) {
+    return new Promise((resolve, reject) => {
+        resolve(currencyRate(Currency));
+        reject();
+    });
+}
 
 // Variables
 const startbtn = document.querySelector('#start');
@@ -63,7 +72,6 @@ Timer.prototype.start = toggleTimer;
 Timer.prototype.reset = resetTimer;
 Timer.prototype.record = recordTimer;
 Timer.prototype.unload = unloadTimer;
-Timer.prototype.keypress = keypress;
 
 HTMLUI.prototype.clear = clearRecords;
 HTMLUI.prototype.records = showStorageRecords;
@@ -114,21 +122,7 @@ function clearRecords() {
     recordList.innerHTML = '';
 }
 
-function keypress(e) {
-    switch (e.keyCode) {
-        case 114:
-            resetbtn.click();
-            break;
-        case 115:
-            startbtn.click();
-            break;
-        case 116:
-            recordbtn.click();
-            break;
-        default:
-            break;
-    }
-}
+
 function unloadTimer() {
     if (started === true) {
         toggleTimer();
@@ -171,23 +165,6 @@ console.log(time);
 eventListen();
 html.records();
 timerdiv.innerHTML = local.getTime();
-
-
-
-
-
-
-function getRate(Currency) {
-    return new Promise((resolve, reject) => {
-        for (let i = 0; i < currencyRate.length; i++) {
-            if (currencyRate[i][0] === Currency) {
-                i;
-                resolve(currencyRate[i][1]);
-            }
-        }
-        reject();
-    });
-}
 
 async function doExchangeRate(fromCurrency, toCurrency) {
        const fromRate = await getRate(fromCurrency);
