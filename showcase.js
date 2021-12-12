@@ -124,24 +124,27 @@ timerdiv.innerHTML = local.getTime();
 
 
 function getRate(Currency) {
-    return new Promise((resolve, reject) => {
+    //return new Promise((resolve, reject) => {
         const err = false;
         if (!err) {
-            resolve(currencyRate(Currency));
+            return currencyRate(Currency);
         } else {
-            reject('failure');
+            console.log('failure');
         }
-    });
+    //});
 }
 function doExchange(fromCurrency, toCurrency, value, Callback) {
-    const fromRateP = Promise.resolve(getRate(fromCurrency));
-    const toRateP = Promise.resolve(getRate(toCurrency));
-    let fromRate = fromRateP.then(val1 => {
+    let fromRate;
+    let toRate;
+    const fromRateP = Promise.resolve(getRate(fromCurrency)).then(val1 => {
         fromRate = val1;
     });
-    let toRate = toRateP.then(val2 => {
+    const toRateP = Promise.resolve(getRate(toCurrency)).then(val2 => {
         toRate = val2;
     });
+    fromRateP;
+    toRateP;
+    console.log(toRate);
     const result = value * fromRate / toRate;
     Callback(result);
 }
