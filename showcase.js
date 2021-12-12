@@ -133,19 +133,18 @@ function getRate(Currency) {
         }
     });
 }
-async function doExchange(fromCurrency, toCurrency, value, Callback) {
+function doExchange(fromCurrency, toCurrency, value, Callback) {
     const fromRateP = Promise.resolve(getRate(fromCurrency));
     const toRateP = Promise.resolve(getRate(toCurrency));
-    const fromRate = fromRateP.then(val => {
-        return val;
+    let fromRate = fromRateP.then(val1 => {
+        fromRate = val1;
     });
-    const toRate = toRateP.then(val => {
-        return val;
+    let toRate = toRateP.then(val2 => {
+        toRate = val2;
     });
     const result = value * fromRate / toRate;
     Callback(result);
 }
-
 
 timer.reset();
 confirmExchangeBtn.addEventListener('click', async () => {
@@ -155,7 +154,7 @@ confirmExchangeBtn.addEventListener('click', async () => {
 
     timer.start;
 
-    doExchange(fromCurrency, toCurrency, value, (result) => {
+    doExchange(fromCurrency, toCurrency, value, result => {
         timer.start;
         timer.record;
         timer.reset;
