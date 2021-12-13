@@ -1,16 +1,18 @@
 const currencyRate = input => {
     setTimeout(() => {
+        let result;
         switch (input) {
-            case 'GBP': return 0.8;
-            case 'JPY': return 128.2;
-            case 'BGN': return 1.9;
-            case 'CAD': return 1.4;
-            case 'HRK': return 7.5;
-            case 'NOK': return 10.2;
-            case 'USD': return 1.1;
-            case 'UAH': return 30.9;
-            case 'PLN': return 4.6;
+            case 'GBP': result = 0.8; break;
+            case 'JPY': result = 128.2; break;
+            case 'BGN': result = 1.9; break;
+            case 'CAD': result = 1.4; break;
+            case 'HRK': result = 7.5; break;
+            case 'NOK': result = 10.2; break;
+            case 'USD': result = 1.1; break;
+            case 'UAH': result = 30.9; break;
+            case 'PLN': result = 4.6; break;
         }
+        return result;
     }, 1000);
 };
 // would probably have been an external API irl
@@ -164,3 +166,4 @@ confirmExchangeBtn.addEventListener('click', async () => {
         console.log(result);
     });
 });
+console.log(currencyRate('UAH'));
