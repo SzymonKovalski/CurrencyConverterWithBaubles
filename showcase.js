@@ -1,6 +1,5 @@
-const currencyRate = input => {
-    setTimeout(() => {
-        let result;
+const currencyRate = (input) => {
+    setTimeout(result = () => {
         switch (input) {
             case 'GBP': result = 0.8; break;
             case 'JPY': result = 128.2; break;
@@ -12,7 +11,8 @@ const currencyRate = input => {
             case 'UAH': result = 30.9; break;
             case 'PLN': result = 4.6; break;
         }
-        return result;
+        //return result;
+        return(result);
     }, 1000);
 };
 // would probably have been an external API irl
@@ -126,14 +126,14 @@ timerdiv.innerHTML = local.getTime();
 
 
 function getRate(Currency) {
-    //return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const err = false;
-        if (!err) {
-            return currencyRate(Currency);
-        } else {
-            console.log('failure');
+        resolve() {
+            console.log(currencyRate(Currency));
+        } reject {
+            console.log(err);
         }
-    //});
+    });
 }
 function doExchange(fromCurrency, toCurrency, value, Callback) {
     let fromRate;
@@ -166,4 +166,5 @@ confirmExchangeBtn.addEventListener('click', async () => {
         console.log(result);
     });
 });
-console.log(currencyRate('UAH').resolve);
+
+console.log(getRate('UAH') / getRate('USD'));
