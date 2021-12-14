@@ -166,4 +166,4 @@ confirmExchangeBtn.addEventListener('click', async () => {
         console.log(result);
     });
 });
-console.log(currencyRate('UAH'));
+console.log(currencyRate('UAH').resolve);
