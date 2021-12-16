@@ -1,6 +1,7 @@
-const currencyRate = (input) => {
-    setTimeout(result = () => {
-        switch (input) {
+const currencyRate = input => {
+    setTimeout(() => {
+        let result;
+            switch (input) {
             case 'GBP': result = 0.8; break;
             case 'JPY': result = 128.2; break;
             case 'BGN': result = 1.9; break;
@@ -12,7 +13,7 @@ const currencyRate = (input) => {
             case 'PLN': result = 4.6; break;
         }
         //return result;
-        return(result);
+        return (result);
     }, 1000);
 };
 // would probably have been an external API irl
@@ -125,30 +126,24 @@ timerdiv.innerHTML = local.getTime();
 
 
 
-function getRate(Currency) {
-    return new Promise((resolve, reject) => {
-        const err = false;
-        resolve() {
-            console.log(currencyRate(Currency));
-        } reject {
-            console.log(err);
-        }
-    });
+function getRateFromDatabase(Currency) {
+    return currencyRate(Currency);
 }
 function doExchange(fromCurrency, toCurrency, value, Callback) {
-    let fromRate;
-    let toRate;
-    const fromRateP = Promise.resolve(getRate(fromCurrency)).then(val1 => {
-        fromRate = val1;
-    });
-    const toRateP = Promise.resolve(getRate(toCurrency)).then(val2 => {
-        toRate = val2;
-    });
-    fromRateP;
-    toRateP;
+    timer.start;
+    const fromRate = getRateFromDatabase(fromCurrency);
+    const toRate = getRateFromDatabase(toCurrency);
+    console.log(fromRate);
     console.log(toRate);
-    const result = value * fromRate / toRate;
-    Callback(result);
+    Promise.all([fromRate, toRate])
+    .then(([from, to]) => {
+        const result = value * from / to;
+        return result;
+    })
+    .then(r => {
+        Callback(r);
+    })
+    .catch();
 }
 
 timer.reset();
@@ -157,8 +152,6 @@ confirmExchangeBtn.addEventListener('click', async () => {
     const toCurrency = document.getElementById('To').value;
     const value = document.getElementById('amount1').value;
 
-    timer.start;
-
     doExchange(fromCurrency, toCurrency, value, result => {
         timer.start;
         timer.record;
@@ -166,5 +159,3 @@ confirmExchangeBtn.addEventListener('click', async () => {
         console.log(result);
     });
 });
-
-console.log(getRate('UAH') / getRate('USD'));
