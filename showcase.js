@@ -1,7 +1,7 @@
 const currencyRate = input => {
     setTimeout(() => {
         let result;
-            switch (input) {
+        switch (input) {
             case 'GBP': result = 0.8; break;
             case 'JPY': result = 128.2; break;
             case 'BGN': result = 1.9; break;
@@ -126,13 +126,15 @@ timerdiv.innerHTML = local.getTime();
 
 
 
-function getRateFromDatabase(Currency) {
-    return currencyRate(Currency);
+async function getRateFromDatabase(Currency) {
+    const rate = await currencyRate(Currency);
+    console.log(rate);
+    return rate;
 }
-function doExchange(fromCurrency, toCurrency, value, Callback) {
+async function doExchange(fromCurrency, toCurrency, value, Callback) {
     timer.start;
-    const fromRate = getRateFromDatabase(fromCurrency);
-    const toRate = getRateFromDatabase(toCurrency);
+    const fromRate = await getRateFromDatabase(fromCurrency);
+    const toRate = await getRateFromDatabase(toCurrency);
     console.log(fromRate);
     console.log(toRate);
     Promise.all([fromRate, toRate])
@@ -156,6 +158,6 @@ confirmExchangeBtn.addEventListener('click', async () => {
         timer.start;
         timer.record;
         timer.reset;
-        console.log(result);
+        console.log(result); //NaN
     });
 });
