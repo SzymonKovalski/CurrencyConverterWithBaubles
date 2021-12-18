@@ -1,15 +1,15 @@
 // would probably have been an external API irl
-const currencyRate = [
-    { 'GBP': 0.8 },
-    { 'JPY': 128.2 },
-    { 'BGN': 1.9 },
-    { 'CAD': 1.4 },
-    { 'HRK': 7.5 },
-    { 'NOK': 10.2 },
-    { 'USD': 1.1 },
-    { 'UAH': 30.9 },
-    { 'PLN': 4.6 }
-];
+const currencyRate = {
+    'GBP': 0.8,
+    'JPY': 128.2,
+    'BGN': 1.9,
+    'CAD': 1.4,
+    'HRK': 7.5,
+    'NOK': 10.2,
+    'USD': 1.1,
+    'UAH': 30.9,
+    'PLN': 4.6,
+};
 
 
 
@@ -18,19 +18,16 @@ async function getRateFromDatabase(Currency) {
     console.log(rate);
     return rate;
 }
-
-
-
 async function doExchange(fromCurrency, toCurrency, value, Callback) {
     //timer.start;
     //faking a delay between database
 
-    const fromRate = setTimeout(getRateFromDatabase(fromCurrency), 1010);
+    const fromRate = setTimeout(getRateFromDatabase(fromCurrency), 1000);
     const toRate = setTimeout(getRateFromDatabase(toCurrency), 1000);
+    console.log(fromRate);
+    console.log(toRate);
     Promise.all([fromRate, toRate])
     .then(([from, to]) => {
-        console.log(fromRate);
-        console.log(toRate);
         const result = value * from / to;
         console.log(result);
         return result;
