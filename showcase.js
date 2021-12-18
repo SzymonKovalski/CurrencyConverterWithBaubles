@@ -22,13 +22,13 @@ async function doExchange(fromCurrency, toCurrency, value, Callback) {
     //timer.start;
     //faking a delay between database
 
-    const fromRate = setTimeout(getRateFromDatabase(fromCurrency), 1000);
-    const toRate = setTimeout(getRateFromDatabase(toCurrency), 1000);
+    const fromRate = getRateFromDatabase(fromCurrency);
+    const toRate = getRateFromDatabase(toCurrency);
     console.log(fromRate);
     console.log(toRate);
     Promise.all([fromRate, toRate])
     .then(([from, to]) => {
-        const result = value * from / to;
+        const result = value / from * to;
         console.log(result);
         return result;
     })
