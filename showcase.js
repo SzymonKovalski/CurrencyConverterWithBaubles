@@ -1,21 +1,23 @@
-const currencyRate = input => {
-    setTimeout(() => {
-        let result;
-        switch (input) {
-            case 'GBP': result = 0.8; break;
-            case 'JPY': result = 128.2; break;
-            case 'BGN': result = 1.9; break;
-            case 'CAD': result = 1.4; break;
-            case 'HRK': result = 7.5; break;
-            case 'NOK': result = 10.2; break;
-            case 'USD': result = 1.1; break;
-            case 'UAH': result = 30.9; break;
-            case 'PLN': result = 4.6; break;
-        }
-        //return result;
-        return (result);
-    }, 1000);
-};
+const currencyRate = {
+    'GBP': 0.8,
+    'JPY': 128.2,
+    'BGN': 1.9,
+    'CAD': 1.4,
+    'HRK': 7.5,
+    'NOK': 10.2,
+    'USD': 1.1,
+    'UAH': 30.9,
+    'PLN': 4.6,
+    };
+
+
+
+function getRateFromDatabase(Currency) {
+    const rate = currencyRate(Currency);
+    console.log(rate);
+    return rate;
+}
+getRateFromDatabase('UAH');
 // would probably have been an external API irl
 
 
@@ -126,11 +128,7 @@ timerdiv.innerHTML = local.getTime();
 
 
 
-async function getRateFromDatabase(Currency) {
-    const rate = await currencyRate(Currency);
-    console.log(rate);
-    return rate;
-}
+
 async function doExchange(fromCurrency, toCurrency, value, Callback) {
     timer.start;
     const fromRate = await getRateFromDatabase(fromCurrency);
