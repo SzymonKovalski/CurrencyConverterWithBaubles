@@ -1,4 +1,4 @@
-import { getRateFromDatabase } from './Database.js';
+import { getRateFromDatabase } from './Database.js'
 async function doExchange(fromCurrency, toCurrency, value, Callback) {
     //timer.start;
     //faking a delay between database
