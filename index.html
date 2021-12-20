@@ -9,23 +9,24 @@
 </head>
 
 <body>
-  <h3>Stopwatch Demo</h3>
 
-  <div id="timer" class="container">0</div>
+  <div class="container">
+    <div class="currency">
+      <select id="fromCurrency">
+        <option value="PLN" selected>PLN</option>
+        <option value="USD">USD</option>
+        <option value="UAH">UAH</option>
+      </select>
+      <input type="number" id="fromAmount" placeholder="0" value=1>
+      <select id="toCurrency">
+        <option value="PLN">PLN</option>
+        <option value="USD">USD</option>
+        <option value="UAH" selected>UAH</option>
+      </select>
+    </div>
+  </div>
 
-  <div id="btns" class="container">
-    <button id="start" class="btn">Start/Stop</button>
-    <button id="reset" class="btn">Reset</button>
-    <button id="record" class="btn">Record Time</button>
-
-    <p>Amount</p>
-    <input id="amount1" name="amount1" type="text" placeholder="Number" />
-    <p>From</p>
-    <input id="From" name="From" type="text" placeholder="UAH" />
-    <p>To</p>
-    <input id="To" name="To" type="text" placeholder="PLN" />
-
-    <button id="confirm" class="btn">Confirm</button>
+  <button id="confirm" class="btn">Confirm</button>
   </div>
 
   <div id="record-div" class="container">
@@ -35,7 +36,7 @@
     </ul>
   </div>
 
-  <script src="Main.js"></script>
+  <script src="Currency-Converter.js"></script>
 </body>
 
 </html>
