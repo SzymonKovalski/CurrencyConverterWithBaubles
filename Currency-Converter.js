@@ -1,21 +1,40 @@
-import { getRateFromDatabase } from './Database.js';
-async function doExchange(fromCurrency, toCurrency, value, Callback) {
-    //timer.start;
-    //faking a delay between database
+const fromCurrencyEL = document.getElementById('fromCurrency');
+const toCurrencyEL = document.getElementById('toCurrency');
+const fromAmountEL = document.getElementById('fromAmount');
+const toAmountEL = document.getElementById('toAmount');
 
-    const fromRate = getRateFromDatabase(fromCurrency);
-    const toRate = getRateFromDatabase(toCurrency);
-    console.log(fromRate);
-    console.log(toRate);
-    Promise.all([fromRate, toRate])
-    .then(([from, to]) => {
-        const result = value / from * to;
-        console.log(result);
-        return result;
-    })
-    .then(r => {
-        Callback(r);
-    })
-    .catch();
+const rateEL = document.getElementById('rate');
+const swapEL = document.getElementById('Swap');
+
+// fetch currency rates
+
+function calculate() {
+    const fromCurrency = fromCurrencyEL.value;
+    const toCurrency = toCurrencyEL.value;
+
+    fetch(`https://v6.exchangerate-api.com/v6/e8c3ed2bdb2608062e5d5a95/latest/${fromCurrency}`)
+    .then(res => res.json())
+    .then(data => {
+        //console.log(data);
+        const rate = data.conversion_rates;
+        rateEL.innerText = `1 ${fromCurrency} = ${rate} ${toCurrency}`;
+    });
 }
-export default doExchange;
+
+
+
+
+
+
+
+
+
+
+
+
+
+fromCurrencyEL.addEventListener('change', calculate);
+toCurrencyEL.addEventListener('change', calculate);
+fromAmountEL.addEventListener('input', calculate);
+toAmountEL.addEventListener('input', calculate);
+calculate();
