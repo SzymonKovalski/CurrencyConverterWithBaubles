@@ -1,4 +1,4 @@
-import './Currency-Converter.js';
+import { doExchange } from './Currency-Converter.js';
 
 const confirmExchangeBtn = document.querySelector('#confirm');
 
