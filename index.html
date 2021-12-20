@@ -11,22 +11,28 @@
 <body>
 
   <div class="container">
-    <div class="currency">
+    <div class="from">
       <select id="fromCurrency">
         <option value="PLN" selected>PLN</option>
         <option value="USD">USD</option>
         <option value="UAH">UAH</option>
       </select>
       <input type="number" id="fromAmount" placeholder="0" value=1>
+
+    </div>
+    <button id="Swap" class="btn">Swap</button>
+
+
+    <div class="To">
       <select id="toCurrency">
         <option value="PLN">PLN</option>
         <option value="USD">USD</option>
         <option value="UAH" selected>UAH</option>
       </select>
+      <input type="number" id="toAmount" placeholder="0" value=1>
     </div>
   </div>
 
-  <button id="confirm" class="btn">Confirm</button>
   </div>
 
   <div id="record-div" class="container">
