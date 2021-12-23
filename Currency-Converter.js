@@ -18,6 +18,8 @@ function calculate() {
         //console.log(data);
         const rate = data.conversion_rates;
         rateEL.innerText = `1 ${fromCurrency} = ${rate} ${toCurrency}`;
+
+        toAmountEL.value = (fromAmountEL.value * rate).toFixed(2);
     });
 }
 
