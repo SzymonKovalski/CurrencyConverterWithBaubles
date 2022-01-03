@@ -7,37 +7,37 @@ const rateEL = document.getElementById('rate');
 const swapEL = document.getElementById('swap');
 
 const timerEL = document.getElementById('timer');
+
+const rememberEL = document.getElementById('remember');
 const historyEL = document.getElementById('history');
 
 class History {
     constructor(display, size = 3) {
-        this.data;
+        this.data = [];
         this.size = size;
         this.display = display;
     }
     addToTop(newData) {
-        console.log(newData);
-        for (let i = 0; i < this.size; i++) {
-            if (i + 1 < this.size) {
-                this.data[i] = this.data[i + 1];
+        //console.log(newData);
+        for (let i = this.size - 1; i >= 0; i--) {
+            console.log(i);
+            if (i > 0) {
+                this.data[i] = this.data[i - 1];
+                if (this.data[i] === undefined) {
+                    this.data[i] = '';
+                }
             } else {
-                this.data = newData;
+                this.data[i] = newData;
             }
         }
         this.update();
     }
     update() {
-        let innerHTMLstring = ``;
+        this.display.innerHTML = '';
         for (let i = 0; i < this.size; i++) {
-            const currentData = this.data[i];
-            innerHTMLstring += `<li>`;
-            for (let j = 0; j < this.dataArraySize; j++) {
-                innerHTMLstring += `${currentData[j]}`;
-            }
-            innerHTMLstring += `</li>`;
+            this.display.innerHTML += `<li>${this.data[i]}</li>`;
+            console.log(this.data[i]);
         }
-        console.log(innerHTMLstring);
-        this.display.innerHTML = `${innerHTMLstring}`;
     }
 }
 
@@ -100,17 +100,17 @@ function calculate() {
         const rate = data.conversion_rates[toCurrency];
         rateEL.innerText = `1 ${fromCurrency} = ${rate} ${toCurrency}`;
         const fromAmount = fromAmountEL.value;
-        toAmountEL.value = (fromAmountEL.value * rate).toFixed(2);
+        toAmountEL.value = (fromAmount * rate).toFixed(2);
         timer.stop();
-
-        history.addToTop([fromAmount][fromCurrency][
-            toAmountEL.value][toCurrency][
-                rateEL.innerText][timer.returnValue()]);
 
     }).catch(() => {
         timer.stop();
     });
 }
+
+
+
+
 
 fromCurrencyEL.addEventListener('change', calculate);
 toCurrencyEL.addEventListener('change', calculate);
@@ -122,4 +122,13 @@ swapEL.addEventListener('click', () => {
     toCurrencyEL.value = temp;
     calculate();
   });
+rememberEL.addEventListener('click', () => {
+    const fromA = fromAmountEL.value;
+    const fromC = fromCurrencyEL.value;
+    const toA = toAmountEL.value;
+    const toC = toCurrencyEL.value;
+    const newData = `${fromA} ${fromC} = ${toA} ${toC}`;
+    history.addToTop([newData]);
+});
+
 calculate();
