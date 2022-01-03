@@ -8,6 +8,35 @@ const swapEL = document.getElementById('swap');
 
 const timerEL = document.getElementById('timer');
 
+class History {
+    constructor(display, size = 3) {
+        this.data;
+        this.size = size;
+        this.display = display;
+    }
+    addToTop(newData) {
+        for (let i = 0; i < this.size; i++) {
+            if (i + 1 < this.size) {
+                this.data[i] = this.data[i + 1];
+            } else {
+                this.data = newData;
+            }
+        }
+        this.update();
+    }
+    update() {
+        let innerHTMLstring = ``;
+        for (let i = 0; i < this.size; i++) {
+            const currentData = this.data[i];
+            innerHTMLstring += `<li>`;
+            for (let j = 0; j < this.dataArraySize; j++) {
+                innerHTMLstring += `${currentData[j]}`;
+            }
+            innerHTMLstring += `</li>`;
+        }
+        this.display.innerHTML = `${innerHTMLstring}`;
+    }
+}
 
 class Timer {
     constructor(display, delay = 1) { //Delay in ms
@@ -46,8 +75,15 @@ class Timer {
         this.value = 0;
         this.update();
     }
+    returnValue() {
+        return this.value;
+    }
 }
 const timer = new Timer(timerEL);
+const history = new History();
+
+//make a history of the last x conversions
+
 
 function calculate() {
     const fromCurrency = fromCurrencyEL.value;
@@ -60,9 +96,12 @@ function calculate() {
     .then(data => {
         const rate = data.conversion_rates[toCurrency];
         rateEL.innerText = `1 ${fromCurrency} = ${rate} ${toCurrency}`;
-
+        const fromAmount = fromAmountEL.value;
         toAmountEL.value = (fromAmountEL.value * rate).toFixed(2);
         timer.stop();
+        history.addToTop([fromAmount][fromCurrency][
+            toAmountEL.value][toCurrency][
+                rateEL.innerText][timer.returnValue()]);
     }).catch(() => {
         timer.stop();
     });
