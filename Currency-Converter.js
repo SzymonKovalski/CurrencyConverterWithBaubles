@@ -7,6 +7,7 @@ const rateEL = document.getElementById('rate');
 const swapEL = document.getElementById('swap');
 
 const timerEL = document.getElementById('timer');
+const historyEL = document.getElementById('history');
 
 class History {
     constructor(display, size = 3) {
@@ -15,6 +16,7 @@ class History {
         this.display = display;
     }
     addToTop(newData) {
+        console.log(newData);
         for (let i = 0; i < this.size; i++) {
             if (i + 1 < this.size) {
                 this.data[i] = this.data[i + 1];
@@ -34,6 +36,7 @@ class History {
             }
             innerHTMLstring += `</li>`;
         }
+        console.log(innerHTMLstring);
         this.display.innerHTML = `${innerHTMLstring}`;
     }
 }
@@ -80,7 +83,7 @@ class Timer {
     }
 }
 const timer = new Timer(timerEL);
-const history = new History();
+const history = new History(historyEL);
 
 //make a history of the last x conversions
 
@@ -99,9 +102,11 @@ function calculate() {
         const fromAmount = fromAmountEL.value;
         toAmountEL.value = (fromAmountEL.value * rate).toFixed(2);
         timer.stop();
+
         history.addToTop([fromAmount][fromCurrency][
             toAmountEL.value][toCurrency][
                 rateEL.innerText][timer.returnValue()]);
+
     }).catch(() => {
         timer.stop();
     });
